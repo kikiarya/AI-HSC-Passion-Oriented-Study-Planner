@@ -1,0 +1,51 @@
+services:
+  # Backend Service - Development Mode
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    container_name: hsc-power-backend-dev
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      # Mount source code for hot reload
+      - ./backend:/app
+      - backend-node-modules:/app/node_modules
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+    env_file:
+      - ./backend/.env
+    networks:
+      - hsc-network
+
+  # Frontend Service - Development Mode
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: hsc-power-frontend-dev
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    volumes:
+      # Mount source code for hot reload
+      - ./frontend:/app
+      - frontend-node-modules:/app/node_modules
+    environment:
+      - NODE_ENV=development
+      - VITE_API_URL=http://localhost:3000
+    depends_on:
+      - backend
+    networks:
+      - hsc-network
+
+networks:
+  hsc-network:
+    driver: bridge
+
+volumes:
+  backend-node-modules:
+  frontend-node-modules:
+

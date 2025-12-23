@@ -1,0 +1,29 @@
+{
+  "name": "hsc-power-elec5620-group83",
+  "version": "1.0.0",
+  "description": "HSC Power - Educational Platform for HSC Students",
+  "private": true,
+  "scripts": {
+    "install:all": "cd backend && npm install && cd ../frontend && npm install",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "test:backend": "cd backend && npm test",
+    "test:frontend": "cd frontend && npm test run",
+    "build:frontend": "cd frontend && npm run build",
+    "start:backend": "cd backend && npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR_USERNAME/ELEC5620-Group83.git"
+  },
+  "keywords": [
+    "education",
+    "hsc",
+    "react",
+    "nodejs",
+    "supabase"
+  ],
+  "author": "ELEC5620 Group 83",
+  "license": "ISC"
+}
+

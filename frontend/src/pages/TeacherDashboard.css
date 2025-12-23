@@ -1,0 +1,16 @@
+/* Teacher Dashboard Styles */
+/* Imports base dashboard styles from StudentDashboard.css */
+@import './StudentDashboard.css';
+
+/* Teacher-specific overrides and additions */
+
+/* ===========================
+   SHARED TEACHER STYLES
+   =========================== */
+
+.sidebar-footer-text {
+  text-align: center;
+  font-size: 0.75rem;
+  color: #718096;
+  padding: 0 1rem;
+}

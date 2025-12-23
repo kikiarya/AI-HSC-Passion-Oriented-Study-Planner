@@ -1,0 +1,657 @@
+/* ===== GradeAssignmentView ===== */
+/* Grading interface for assignments with submission list and grading panel */
+
+:root {
+  --gav-border: #e2e8f0;
+  --gav-muted: #64748b;
+  --gav-muted-light: #94a3b8;
+  --gav-card: #ffffff;
+  --gav-shadow: 0 2px 8px rgba(0,0,0,.08);
+  --gav-shadow-hover: 0 4px 12px rgba(0,0,0,.12);
+  --gav-primary: #3b82f6;
+  --gav-primary-hover: #2563eb;
+  --gav-success: #10b981;
+  --gav-warn: #f59e0b;
+  --gav-bg: #f8fafc;
+}
+
+/* Main container */
+.grade-assignment-view {
+  width: 100%;
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+  background: var(--gav-bg);
+}
+
+/* Center states (loading, empty) */
+.center-state {
+  text-align: center;
+  padding: 60px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+}
+
+.center-state .big-emoji {
+  font-size: 4rem;
+  margin-bottom: 16px;
+  line-height: 1;
+}
+
+.center-state h3 {
+  margin: 0 0 12px 0;
+  color: #1e293b;
+  font-size: 1.5rem;
+}
+
+.center-state p {
+  margin: 0 0 24px 0;
+  color: var(--gav-muted);
+  font-size: 1rem;
+}
+
+/* Header */
+.grade-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding: 20px;
+  background: var(--gav-card);
+  border: 1px solid var(--gav-border);
+  border-radius: 12px;
+  box-shadow: var(--gav-shadow);
+}
+
+.grade-header .assignment-meta {
+  flex: 1;
+}
+
+.grade-header .title {
+  margin: 0 0 12px 0;
+  color: #0f172a;
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.grade-stats {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Buttons */
+.btn {
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: 1px solid var(--gav-border);
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn:hover {
+  box-shadow: var(--gav-shadow-hover);
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn--back {
+  background: #f8fafc;
+  border: 1px solid var(--gav-border);
+  color: #475569;
+}
+
+.btn--back:hover {
+  background: #f1f5f9;
+}
+
+.btn--primary {
+  background: var(--gav-primary);
+  border: 1px solid var(--gav-primary);
+  color: white;
+}
+
+.btn--primary:hover {
+  background: var(--gav-primary-hover);
+}
+
+.btn--block {
+  width: 100%;
+  justify-content: center;
+}
+
+/* Chips/Badges */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: #e2e8f0;
+  color: #475569;
+}
+
+.chip--success {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.chip--warn {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+/* Grading container (split layout) */
+.grading-container {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 20px;
+  align-items: start;
+  transition: grid-template-columns 0.3s ease;
+}
+
+.grading-container:has(.submissions-list.collapsed) {
+  grid-template-columns: 60px 1fr;
+}
+
+/* Submissions list (left sidebar) */
+.submissions-list {
+  background: var(--gav-card);
+  border: 1px solid var(--gav-border);
+  border-radius: 12px;
+  box-shadow: var(--gav-shadow);
+  overflow: hidden;
+  position: sticky;
+  top: 20px;
+  max-height: calc(100vh - 280px);
+  display: flex;
+  flex-direction: column;
+}
+
+.submissions-list.collapsed {
+  width: 60px;
+  min-width: 60px;
+}
+
+.submissions-list.collapsed .list-header h3 {
+  display: none;
+}
+
+.submissions-list.collapsed .list-header {
+  justify-content: center;
+  padding: 12px;
+}
+
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid var(--gav-border);
+  background: #f8fafc;
+}
+
+.list-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #1e293b;
+}
+
+.list-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.collapse-btn {
+  background: white;
+  border: 1px solid var(--gav-border);
+  border-radius: 6px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  color: var(--gav-muted);
+}
+
+.collapse-btn:hover {
+  background: #f1f5f9;
+  color: var(--gav-primary);
+  transform: scale(1.05);
+}
+
+.list-scroll {
+  overflow-y: auto;
+  max-height: calc(100vh - 350px);
+}
+
+.submission-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  padding: 14px 16px;
+  text-align: left;
+  background: white;
+  border: none;
+  border-bottom: 1px solid var(--gav-border);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.submission-item:hover {
+  background: #f8fafc;
+}
+
+.submission-item.active {
+  background: #eff6ff;
+  border-left: 3px solid var(--gav-primary);
+}
+
+.submission-item__main {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.student-avatar {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.student-name {
+  font-weight: 600;
+  color: #1e293b;
+  font-size: 0.95rem;
+}
+
+.submission-item__meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding-left: 42px;
+}
+
+.submission-date {
+  font-size: 0.8rem;
+  color: var(--gav-muted-light);
+}
+
+/* Grading panel (right side) */
+.grading-panel {
+  background: var(--gav-card);
+  border: 1px solid var(--gav-border);
+  border-radius: 12px;
+  box-shadow: var(--gav-shadow);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.submission-header {
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--gav-border);
+}
+
+.panel-title {
+  margin: 0 0 8px 0;
+  color: #0f172a;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.submission-header .submission-date {
+  color: var(--gav-muted);
+  font-size: 0.9rem;
+}
+
+/* AI Grade Row */
+.ai-grade-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: #f0f9ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+}
+
+.ai-grade-row .muted {
+  flex: 1;
+  margin: 0;
+}
+
+/* Spinner */
+.spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255,255,255,.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Rubric section */
+.rubric-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.rubric-container {
+  background: #f0f9ff;
+  border: 2px solid #bfdbfe;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.rubric-item {
+  background: white;
+  border: 1px solid #e0f2fe;
+  border-radius: 6px;
+  padding: 12px;
+}
+
+.rubric-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.rubric-criteria {
+  font-weight: 600;
+  color: #0f172a;
+  font-size: 0.95rem;
+}
+
+.rubric-points {
+  font-weight: 700;
+  color: var(--gav-primary);
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+
+.rubric-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 2px solid #bfdbfe;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #0f172a;
+}
+
+.rubric-total .total-value {
+  color: var(--gav-primary);
+  font-size: 1.2rem;
+}
+
+/* Submission content section */
+.submission-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.section-title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.content-box {
+  background: #f8fafc;
+  border: 1px solid var(--gav-border);
+  border-radius: 8px;
+  padding: 20px;
+  color: #334155;
+  line-height: 1.6;
+  min-height: 200px;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.content-box p {
+  margin: 0 0 12px 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-size: 0.95rem;
+}
+
+.content-box p:last-child {
+  margin-bottom: 0;
+}
+
+.attachments {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--gav-border);
+}
+
+.attachments p {
+  margin: 0;
+}
+
+.attachments a {
+  color: var(--gav-primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.attachments a:hover {
+  text-decoration: underline;
+}
+
+/* Grading form */
+.grading-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 200px;
+}
+
+.form-group.grow {
+  flex: 1;
+  min-width: 100%;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #1e293b;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.grade-hint {
+  font-weight: 400;
+  color: var(--gav-muted);
+  font-size: 0.85rem;
+}
+
+.grade-input,
+.feedback-textarea {
+  padding: 12px;
+  border: 1px solid var(--gav-border);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: border-color 0.2s ease;
+}
+
+.grade-input:focus,
+.feedback-textarea:focus {
+  outline: none;
+  border-color: var(--gav-primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.grade-input {
+  max-width: 180px;
+}
+
+.feedback-textarea {
+  resize: vertical;
+  min-height: 150px;
+  max-height: 400px;
+  line-height: 1.5;
+}
+
+.grading-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 8px;
+}
+
+/* Utility classes */
+.muted {
+  color: var(--gav-muted);
+  font-size: 0.9rem;
+}
+
+.small {
+  font-size: 0.85rem;
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+  .grading-container {
+    grid-template-columns: 1fr;
+  }
+
+  .grading-container:has(.submissions-list.collapsed) {
+    grid-template-columns: 1fr;
+  }
+
+  .submissions-list {
+    position: relative;
+    top: 0;
+    max-height: 400px;
+  }
+
+  .submissions-list.collapsed {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .submissions-list.collapsed .list-header {
+    justify-content: space-between;
+    padding: 16px;
+  }
+
+  .submissions-list.collapsed .list-header h3 {
+    display: block;
+  }
+
+  .list-scroll {
+    max-height: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .grade-assignment-view {
+    padding: 12px;
+  }
+
+  .grade-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px;
+  }
+
+  .grade-header .title {
+    font-size: 1.4rem;
+  }
+
+  .grading-panel {
+    padding: 16px;
+  }
+
+  .panel-title {
+    font-size: 1.2rem;
+  }
+
+  .form-row {
+    flex-direction: column;
+  }
+
+  .grade-input {
+    max-width: 100%;
+  }
+
+  .ai-grade-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .grade-stats {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .chip {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .grading-actions {
+    justify-content: stretch;
+  }
+
+  .btn--block {
+    width: 100%;
+  }
+}
+

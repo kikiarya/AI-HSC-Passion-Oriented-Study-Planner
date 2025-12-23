@@ -1,0 +1,14 @@
+node_modules
+npm-debug.log
+.env
+.env.local
+.git
+.gitignore
+README.md
+*.md
+.DS_Store
+test-*.js
+diagnose-db.js
+fix-missing-roles.js
+check-db-connection.js
+

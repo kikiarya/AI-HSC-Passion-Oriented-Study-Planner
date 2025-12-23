@@ -1,0 +1,274 @@
+/* Class Detail View Styles */
+
+.class-detail-period {
+  color: #718096;
+  font-size: 0.95rem;
+}
+
+.stats-grid-detail {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.stat-detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.stat-detail-label {
+  font-size: 0.875rem;
+  color: #718096;
+}
+
+.stat-detail-value {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.students-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.student-card {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+  border: 2px solid #e2e8f0;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.student-card:hover {
+  border-color: #667eea;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.1);
+}
+
+.student-avatar-large {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.student-card h3 {
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.student-email {
+  font-size: 0.85rem;
+  color: #718096;
+  margin-bottom: 0.5rem;
+}
+
+.student-id {
+  font-size: 0.75rem;
+  color: #a0aec0;
+  margin-bottom: 1rem;
+}
+
+.student-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 1rem 0;
+  padding: 1rem 0;
+  border-top: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.student-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.assignments-list-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.assignment-type {
+  font-size: 0.875rem;
+  color: #718096;
+  text-transform: capitalize;
+}
+
+.gradebook-table-container {
+  overflow-x: auto;
+  margin-top: 1rem;
+}
+
+.gradebook-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.gradebook-table th,
+.gradebook-table td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.gradebook-table th {
+  background: #f7fafc;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: #4a5568;
+}
+
+.gradebook-table td {
+  font-size: 0.9rem;
+}
+
+.grade-cell {
+  color: #718096;
+}
+
+.gradebook-note {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  color: #718096;
+  font-style: italic;
+}
+
+.grade-distribution-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.grade-bar-container {
+  display: grid;
+  grid-template-columns: 40px 1fr 80px;
+  gap: 1rem;
+  align-items: center;
+}
+
+.grade-label {
+  font-weight: 600;
+  font-size: 1.125rem;
+  color: #2d3748;
+}
+
+.grade-bar {
+  height: 32px;
+  background: #e2e8f0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.grade-bar-fill {
+  height: 100%;
+  transition: width 0.3s;
+}
+
+.grade-count {
+  font-size: 0.95rem;
+  color: #4a5568;
+  text-align: right;
+}
+
+.trends-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.trend-item {
+  display: grid;
+  grid-template-columns: 80px 1fr 60px;
+  gap: 1rem;
+  align-items: center;
+}
+
+.trend-week {
+  font-size: 0.875rem;
+  color: #718096;
+}
+
+.trend-bar-bg {
+  height: 24px;
+  background: #e2e8f0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.trend-bar-fill {
+  height: 100%;
+  transition: width 0.3s;
+}
+
+.trend-value {
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-align: right;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.metric-card {
+  background: #f7fafc;
+  padding: 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.metric-card h4 {
+  font-size: 0.875rem;
+  color: #718096;
+  margin-bottom: 0.5rem;
+}
+
+.metric-value-large {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2d3748;
+}
+
+/* Status badge styles for assignments */
+.status-badge {
+  padding: 0.2rem 0.45rem;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  display: inline-block;
+}
+
+.status-published { 
+  background: #48bb7820; 
+  color: #2f855a; 
+}
+
+.status-draft { 
+  background: #71809620; 
+  color: #4a5568; 
+}
+
+.status-grading { 
+  background: #ed893620; 
+  color: #c05621; 
+}
+
+.status-graded { 
+  background: #667eea20; 
+  color: #5a67d8; 
+}
+
