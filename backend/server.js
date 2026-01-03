@@ -15,7 +15,7 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
+/* Middleware
 app.use(cors({
   origin: [
     'http://localhost:5173',  // Development frontend (Vite)
@@ -30,6 +30,18 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(logger);
+*/
+
+app.use(cors({
+  origin: [
+    'http://localhost:5173',  // 本地 Vite 开发环境
+    'https://ai-hsc-passion-oriented-study-plann.vercel.app'  // 线上前端（Vercel）
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 
 // Routes
 app.get('/', (req, res) => {
