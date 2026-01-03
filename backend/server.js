@@ -63,7 +63,10 @@ app.use(cors({
   credentials: true
 }));
 
-
+// Body parsing middleware - MUST be added before routes
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(logger);
 
 // Routes
 app.get('/', (req, res) => {
